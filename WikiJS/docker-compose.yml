@@ -1,0 +1,33 @@
+version: "3"
+services:
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: wiki
+      MYSQL_PASSWORD: wikijsrocks
+      MYSQL_USER: wikijs
+      MYSQL_ROOT_PASSWORD: P@ssw0rd!@#$
+    logging:
+      driver: "none"
+    restart: unless-stopped
+    volumes:
+      - ./db-data:/var/lib/mysql
+
+  wiki:
+    image: requarks/wiki:2
+    depends_on:
+      - db
+    environment:
+      DB_TYPE: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: wikijs
+      DB_PASS: wikijsrocks
+      DB_NAME: wiki
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+
+volumes:
+  db-data:
