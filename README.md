@@ -64,7 +64,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
 #### Run hello world
-Verify that Docker Engine is installed correctly by running the hello-world image 
+Verify that Docker Engine is installed correctly by running the hello-world image
+
 ```
 sudo docker run hello-world
 ```
@@ -79,6 +80,7 @@ docker-compose --version
 ```
 #### Run docker command without sudo
 If you want to run docker command without sudo add your user to the docker group 
+
 ```
 sudo groupadd docker 
 sudo usermod -aG docker $USER
@@ -87,6 +89,7 @@ sudo usermod -aG docker $USER
 
 #### Run
 The run command is the best command for pull and starts a container
+
 ```
 docker run <image name:tag>
 
@@ -94,7 +97,7 @@ docker run ubuntu # pull image of ubuntu:latest
 ```
 - Note: Docker default tag is latest and if you don't use tag the default tag used by docker engine
 
-- Note: In the first time docker pull image from hub.docker.com and after that, we can use image locally
+- Note: In the first time, docker pull image from hub.docker.com and after that, we can use image locally
 
 - Note: docker run command is equal with ==>  docker create + docker start
 
@@ -107,20 +110,21 @@ docker run ubuntu ls  # run container with ls command
 docker start -a <container-ID> # run exited container
 ```
 ```
-docker run --rm <image name> # container deleted after exit from that when we use --rm in run command 
+docker run --rm <image name> # when we use --rm in run command, container deleted after exit from the container 
 ```
 ```
-docker run -p <machinePort>:<ContainerPort> <image name> # map container port to local machine port
+docker run -p <LocalPort>:<ContainerPort> <image name> # map container port to local machine port
 ```
 ```
 docker exec -it <container-ID> <command> # run command in a running container 
 
 docker exec -it <container id> bash # for sample, this command gives a shell for us in the running container
 ```
-- Note: In docker run command <-it> option allow us to go interactive mode
+- Note: In docker run command -it option allow us to go interactive mode
 
 #### PS
 Ps command is for show list of containers
+
 ```
 docker ps # show list of all running container
 
@@ -151,7 +155,7 @@ RUN npm install # run the npm install command
 COPY ./ ./ # copy file from host to container
 CMD ["npm", "start"] # Define default command when we run created image. 
 ```
-- Note: You can use ADD for copy file from host to the machine, Add have built-in tar function to extracted files and copy to container
+- Note: You can use ADD for copy file from host to the machine, ADD have built-in tar function to extracted files and copy to container
 - Note: Every COPY, RUN, ADD create a read-only layer when we build own image.
 
 #### Build Dockerfile
@@ -159,11 +163,12 @@ You can build your docker image with a Dockerfile use the below command.
 
 ```
 # Build image with docker build command
-docker build -t <Your-Image-Name> -f <Dockerfile-name> . 
+docker build -t <Your-Image-Name:tag> -f <Dockerfile-name> . 
 ```
 # Docker-compose
 If you have an app with multiple services you can use docker-compose for running your app with multiple containers. in the below, you can see a sample docker-compose file for running wikiJS. 
 create a folder and put your source code in that folder and create a YAML file with name docker-compose.yml
+
 ```
 version: "3"
 services:
