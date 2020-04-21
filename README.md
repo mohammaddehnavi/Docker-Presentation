@@ -140,7 +140,9 @@ docker kill <container-ID> # kill command
 A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image and with docker build command we can create own docker image. You can see a sample Dockerfile in the below
 
 #### Create Dockerfile
-create a folder and put your source files to it then create a file with the name Dokcerfile.```
+create a folder and put your source files to it then create a file with the name Dokcerfile.
+
+```
 # This is docker file for run web app with nodeJS
 FROM node:alpine # Define base image
 WORKDIR /mohammad/webapp # Define working directory, if folder don't exist doker create that folder. 
@@ -163,35 +165,36 @@ docker build -t <Your-Image-Name> -f <Dockerfile-name> .
 If you have an app with multiple services you can use docker-compose for running your app with multiple containers. in the below, you can see a sample docker-compose file for running wikiJS. 
 create a folder and put your source code in that folder and create a YAML file with name docker-compose.yml
 ```
-version: "3" # this is docker-compose interpreter version
-services: #  define a service 
+version: "3"
+services:
 
-  db: # container host name
-    image: postgres:11-alpine # base image 
+  db:
+    image: mysql:8.0
     environment:
-      POSTGRES_DB: wiki
-      POSTGRES_PASSWORD: wikijsrocks
-      POSTGRES_USER: wikijs
+      MYSQL_DATABASE: wiki
+      MYSQL_PASSWORD: wikijsrocks
+      MYSQL_USER: wikijs
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
     logging:
       driver: "none"
     restart: unless-stopped
-    volumes: # define volume for store database localy
-      - db-data:/var/lib/postgresql/data
+    volumes:
+      - ./db-data:/var/lib/mysql
 
-  wiki: # container host name
-    image: requarks/wiki:2 # define base image
-    depends_on: # dfine dependency for running this container
+  wiki:
+    image: requarks/wiki:2
+    depends_on:
       - db
     environment:
-      DB_TYPE: postgres
+      DB_TYPE: mysql
       DB_HOST: db
-      DB_PORT: 5432
+      DB_PORT: 3306
       DB_USER: wikijs
       DB_PASS: wikijsrocks
       DB_NAME: wiki
     restart: unless-stopped
-    ports: # expose port for access localy
-      - "80:3000" 
+    ports:
+      - "8080:3000"
 
 volumes:
   db-data:
