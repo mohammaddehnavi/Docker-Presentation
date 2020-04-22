@@ -201,8 +201,7 @@ services:
     ports:
       - "8080:3000"
 
-volumes:
-  db-data:
+
 ```
 - Note: docker-compose syntax is YAML. 
 
